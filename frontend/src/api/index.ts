@@ -1,5 +1,8 @@
 let socket = new WebSocket("ws://localhost:8080/ws");
-let connect = () => {
+let chatHistory: MessageEvent<any>[] = [];
+let connect = (
+  setChatHistory: React.Dispatch<React.SetStateAction<MessageEvent<any>[]>>
+) => {
   console.log("Attempting to connect...");
 
   socket.onopen = () => {
@@ -12,6 +15,9 @@ let connect = () => {
 
   socket.onmessage = (event) => {
     console.log("Message received: ", event);
+    chatHistory.push(event);
+
+    setChatHistory([...chatHistory]);
   };
 
   socket.onerror = (error) => {
