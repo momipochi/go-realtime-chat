@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 import { connect, sendMessage } from "../api";
 import { Message } from "../dto/messages";
+import { useChatBoxContext } from "../context/chatBoxContext";
 
 export const ChatBox = () => {
   const [msg, setMsg] = useState("");
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
+
+  const { userId, setUserId } = useChatBoxContext();
+
   useEffect(() => {
-    connect(setChatHistory);
+    connect(setChatHistory, setUserId);
   }, []);
+
   return (
     <>
       <div>
         {chatHistory.map((x, index) => (
           <div key={index}>
-            index:{index} {x.body}
+            {x.clientId === userId ? <div>client:{x.clientId}</div> : <></>}
+            index:
+            {index} {x.body}
           </div>
         ))}
       </div>

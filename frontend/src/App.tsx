@@ -1,10 +1,10 @@
 import "./App.css";
-import { ChatBox } from "./components/ChatBox";
+import { ChatBoxContextWrapper } from "./components/ChatBoxContextWrapper";
 
 function App() {
   return (
     <>
-      <ChatBox></ChatBox>
+      <ChatBoxContextWrapper />
     </>
   );
 }

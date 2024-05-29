@@ -2,8 +2,11 @@ import { Message } from "../dto/messages";
 
 let socket = new WebSocket("ws://localhost:8080/ws");
 let chatHistory: Message[] = [];
+let clientId: string = "";
+
 let connect = (
-  setChatHistory: React.Dispatch<React.SetStateAction<Message[]>>
+  setChatHistory: React.Dispatch<React.SetStateAction<Message[]>>,
+  setClientId: React.Dispatch<React.SetStateAction<string>>
 ) => {
   console.log("Attempting to connect...");
 
@@ -18,7 +21,12 @@ let connect = (
   socket.onmessage = (event) => {
     console.log("Message received: ", event);
     try {
-      chatHistory.push(JSON.parse(event.data));
+      let data: Message = JSON.parse(event.data);
+      if (clientId === "") {
+        clientId = data.clientId;
+        setClientId(clientId);
+      }
+      chatHistory.push(data);
     } catch (error) {}
 
     setChatHistory([...chatHistory]);
