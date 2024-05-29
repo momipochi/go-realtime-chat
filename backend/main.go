@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"go-chat-app/pkg/websocket"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 // define our WebSocket endpoint
@@ -14,6 +16,7 @@ func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%+v\n", err)
 	}
 	client := &websocket.Client{
+		ID:   uuid.New(),
 		Conn: ws,
 		Pool: pool,
 	}
