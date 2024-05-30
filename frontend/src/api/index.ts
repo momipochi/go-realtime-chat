@@ -22,6 +22,7 @@ let connect = (
     console.log("Message received: ", event);
     try {
       let data: Message = JSON.parse(event.data);
+      console.log("Content of data: ", data);
       if (clientId === "") {
         clientId = data.clientId;
         setClientId(clientId);
