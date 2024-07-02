@@ -12,6 +12,8 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build
 
-CMD ["go-chat-app"]
+RUN CGO_ENABLED=0 GOOS=linux go build -o /go-chat-app
+
+
+CMD ["/go-chat-app"]
